@@ -26,22 +26,16 @@ def create_vector_store(chunks):
         c.name for c in qdrant.get_collections().collections
     ]
 
-    # Development-mode reset
-    # Deletes old incompatible collections
-    if collection_name in existing_collections:
+    # Create collection only if it does not exist
+    if collection_name not in existing_collections:
 
-        qdrant.delete_collection(
-            collection_name=collection_name
+        qdrant.create_collection(
+            collection_name=collection_name,
+            vectors_config=VectorParams(
+                size=384,
+                distance=Distance.COSINE
+            )
         )
-
-    # Create fresh collection
-    qdrant.create_collection(
-        collection_name=collection_name,
-        vectors_config=VectorParams(
-            size=384,
-            distance=Distance.COSINE
-        )
-    )
 
     points = []
 
