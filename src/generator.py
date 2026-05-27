@@ -1,19 +1,15 @@
 import os
-
-import google.generativeai as genai
-
-
-genai.configure(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
+import requests
 
 
-model = genai.GenerativeModel(
-    "gemini-1.5-flash"
-)
+MODEL_NAME = "nvidia/nemotron-3-super-120b-a12b:free"
 
 
 def generate_answer(query, contexts):
+
+    openrouter_api_key = os.getenv(
+        "OPENROUTER_API_KEY"
+    )
 
     combined_context = "\n\n".join(contexts)
 
@@ -34,8 +30,32 @@ Question:
 Answer:
 """
 
-    response = model.generate_content(
-        prompt
+    headers = {
+        "Authorization": f"Bearer {openrouter_api_key}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.post(
+        url="https://openrouter.ai/api/v1/chat/completions",
+
+        headers=headers,
+
+        json={
+            "model": MODEL_NAME,
+
+            "messages": [
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        }
     )
 
-    return response.text
+    result = response.json()
+
+    if "choices" not in result:
+
+        return f"OpenRouter API Error: {result}"
+
+    return result["choices"][0]["message"]["content"]
