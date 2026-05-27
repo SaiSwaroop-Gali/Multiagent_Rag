@@ -12,7 +12,7 @@ services:
     restart: always
 
   phoenix:
-    image: arize-phoenix:latest
+    image: arizephoenix/phoenix:latest
     container_name: telemetry_dashboard
     ports:
       - "6006:6006"
