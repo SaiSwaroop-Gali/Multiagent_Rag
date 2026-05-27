@@ -22,11 +22,11 @@ def search_documents(query, limit=5):
         query
     ).tolist()
 
-    results = qdrant.query_points(
+    results = qdrant.search(
         collection_name=COLLECTION_NAME,
-        query=query_vector,
+        query_vector=query_vector,
         limit=limit
-    ).points
+    )
 
     formatted_results = []
 

@@ -1,27 +1,22 @@
-from dotenv import load_dotenv
-
-from src.parser import extract_pdf_chunks
-from src.database import create_vector_store
-
-
-load_dotenv()
+from src.retriever import search_documents
 
 
 def main():
 
-    pdf_path = "data/textbook.pdf"
+    query = "What is machine learning?"
 
-    chunks = extract_pdf_chunks(pdf_path)
+    results = search_documents(query)
 
-    print(f"\nExtracted {len(chunks)} chunks")
+    print("\nTop Retrieval Results:\n")
 
-    print("\nGenerating embeddings and storing vectors...")
+    for i, result in enumerate(results, start=1):
 
-    qdrant = create_vector_store(chunks)
+        print(f"\nRESULT {i}")
+        print(f"Score: {result['score']}")
+        print(f"Page: {result['page']}")
+        print(f"Type: {result['type']}")
 
-    print("\nVector database successfully created!")
-
-    print(qdrant.get_collections())
+        print(result["text"][:500])
 
 
 if __name__ == "__main__":
