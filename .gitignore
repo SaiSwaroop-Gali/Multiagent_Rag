@@ -216,3 +216,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Sensitive credentials
+.env
+
+# Local virtual environment
+venv/
+.venv/
+
+# Qdrant local storage database binaries
+qdrant_storage/
+
+# AI Observability / Telemetry local cache
+.phoenix/
+
+# Python compiled bytecode and caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/

@@ -1,0 +1,14 @@
+pymupdf==1.24.2
+langchain-core
+langgraph
+langchain-openai
+qdrant-client
+python-dotenv
+openinference-instrumentation-langchain
+opentelemetry-sdk
+opentelemetry-exporter-otlp
+arize-phoenix
+ragas
+datasets
+pandas
+tabulate
